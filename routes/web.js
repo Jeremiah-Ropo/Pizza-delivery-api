@@ -12,6 +12,8 @@ function initRoutes(app){
     app.get('/login', authController().login);
     
     app.get('/register', authController().register);
+    app.post('/register', authController().postRegister);
+
 
     app.post('/register', (req, res) => {
         res.redirect('/')
