@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Laravel</title>
+        <title>Pizza App</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
@@ -17,10 +17,17 @@
             <div>
                 <ul class="flex items-center">
                     <li class="ml-6"><a href="/menu">Menu</a></li>
-                    <li class="ml-6"><a href="/offer">Offers</a></li><li>
-                    <li class="ml-6"><a href="/login">Login</a></li><li>
-                    <li class="ml-6"><a href="/register">Register</a></li><li>
-                    <li class="ml-6"><a href="/cart"><img src="/img/cart-black.png" alt="cart"></a></li><li>
+                    <% if(user) { %>
+                        <li class="ml-6">
+                            <form action="/logout" method="post">
+                            <a onclick="document.getElementById('logout').submit()" 
+                            style="cursor: pointer;" href="/logout">Logout</a></li>
+                            </form>
+                            <% } else{%> 
+                        <li class="ml-6"><a href="/register">Register</a></li>
+                        <li class="ml-6"><a href="/login">Login</a></li>
+                    <% } %>
+                    <li class="ml-6"><a href="/cart"><img src="/img/cart-black.png" alt="cart"></a></li>
                 </ul>
             </div>
         </nav>

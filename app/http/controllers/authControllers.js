@@ -1,40 +1,35 @@
 const User = require('../../models/user')
 const bcrypt = require('bcrypt')
-const passport = require('../../config/passport')
-const session = require ('express-session')
+const passport = require('passport')
+
+
+
 function authController() {
     return {
         login(req,res){
             return res.render('auth/login')
         },
         //Check for login validation.
-        postLogin(req, res, next){
-            const { email, pasword } = req.body
-            //Validate request
-            if (!email || !pasword){
-                req.flash('error', 'All field are required')
-                return res.redirect('/login')
-            }
-
+        postLogin(req, res, next) {
             passport.authenticate('local', (err, user, info) => {
-                if(err){
-                    req.flash('error', info.message)
+                if(err) {
+                    req.flash('error', info.message )
                     return next(err)
                 }
                 if(!user) {
-                    req.flash('error', info.message)
-                    return next(err)
+                    req.flash('error', info.message )
+                    return res.redirect('/login')
                 }
                 req.logIn(user, (err) => {
-                    if(err){
-                    req.flash('error', info.message)
-                        return next(err)
+                    if(err) {
+                        req.flash('error', info.message ) 
+                        return res.next(err)
                     }
-                    return res.redirect(_getRedirectUrl(req))
+
+                    return res.redirect('/')
                 })
             })(req, res, next)
         },
-
 
 
 
@@ -83,6 +78,11 @@ function authController() {
                return res.status(500).send({message:err.message} || 'Error occured')
         })
  
+        },
+
+        Logout(req, res){
+            req.logout()
+            return res.redirect('/login')
         }
     }
 }

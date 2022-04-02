@@ -32,21 +32,6 @@ require('./app/models/menu');
 require('./app/models/order');
 require('./app/models/user');
 
-const passportInit = require('./app/config/passport')
-passportInit(passport)
-app.use(passport.initialize())
-app.use(passport.session())
-
-app.use(express.urlencoded({ extended: true}))
-
-//Public files setup
-app.use(express.static(__dirname + '/public'));
-
-//Template setup
-app.use(expressLayouts);
-app.set('views', path.join(__dirname, '/resources/views'));
-app.set('view engine', 'ejs');
-
 
 //Using session with cookies setup;
 app.use(cookies('PizzaDelivery'));
@@ -60,6 +45,16 @@ app.use(session({
     cookie:{maxAge:1000 * 60 * 60 * 24 }//24hours
 }))
 
+const passportInit = require('./app/config/passport')
+passportInit(passport)
+app.use(passport.initialize())
+app.use(passport.session())
+
+
+app.use(express.urlencoded({ extended: true}))
+
+//Public files setup
+app.use(express.static(__dirname + '/public'));
 //Flash messages setup
 app.use(flash());
 app.use(express.json())
@@ -70,6 +65,12 @@ app.use((req,res,next) => {
     res.locals.user = req.user
     next()
 })
+
+//Template setup
+app.use(expressLayouts);
+app.set('views', path.join(__dirname, '/resources/views'));
+app.set('view engine', 'ejs');
+
 
 //Router setup
 require('./routes/web')(app);
