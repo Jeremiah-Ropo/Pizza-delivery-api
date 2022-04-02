@@ -1,6 +1,7 @@
 const User = require('../../models/user')
 const bcrypt = require('bcrypt')
 const passport = require('../../config/passport')
+const session = require ('express-session')
 function authController() {
     return {
         login(req,res){
