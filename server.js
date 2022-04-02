@@ -7,6 +7,7 @@ const flash = require('express-flash')
 const MongoDbStore = require('connect-mongo')
 const path = require('path');
 const mongoose = require('mongoose')
+const passport = require('passport')
 
 
 
@@ -31,8 +32,10 @@ require('./app/models/menu');
 require('./app/models/order');
 require('./app/models/user');
 
-
-
+const passportInit = require('./app/config/passport')
+passportInit(passport)
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(express.urlencoded({ extended: true}))
 
@@ -52,7 +55,7 @@ app.use(session({
     secret: 'PizzaDeliverySecretSession',
     saveUninitialized:true,
     store: MongoDbStore.create({mongoUrl: process.env.MONGO_URI, collection:'sessions',
-                                mongooseConnection:db, client: db.getClient()}),
+                                mongooseConnection:db}),
     resave:true,
     cookie:{maxAge:1000 * 60 * 60 * 24 }//24hours
 }))
