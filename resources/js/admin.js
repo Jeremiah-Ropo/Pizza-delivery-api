@@ -25,7 +25,7 @@ export function initAdmin() {
                 <p>${ menuItem.item.name } - ${ menuItem.qty } pcs </p>
             `
         }).join('')
-      };
+      }
 
     function generateMarkup(orders) {
         return orders.map(order => {
@@ -77,4 +77,7 @@ export function initAdmin() {
             </tr>
         `
         }).join('')
-    }}
+    }
+}
+
+module.exports = initAdmin

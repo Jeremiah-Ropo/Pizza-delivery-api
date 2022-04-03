@@ -8,7 +8,7 @@ const adminOrderController = require('../app/http/controllers/admin/adminOrderCo
 //Authorization
 const auth = require('../app/http/middlewares/auth');
 const guest = require('../app/http/middlewares/guest')
-
+const admin = require('../app/http/middlewares/admin')
 
 function initRoutes(app){
     app.get('/', homeController().index);
@@ -31,7 +31,7 @@ function initRoutes(app){
     app.post('/order', auth, orderController().store);
     app.get('/customer/orders', auth, orderController().index)
 
-    app.post('/admin/orders', adminOrderController().index)
+    app.get('/admin/orders', admin, adminOrderController().index)
     
 
 }

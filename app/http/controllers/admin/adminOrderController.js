@@ -3,9 +3,14 @@ const Order = require('../../../models/order')
 function adminOrderController() {
     return {
         index(req, res){
-            order.find({status: {$ne:'completed'}}, null,{sort: {createdAt:-1}
+            Order.find({status: {$ne:'completed'}}, null,{sort: {createdAt:-1}
         }).populate('customerId', '-password').exec((err, orders)=>{
-            return res.render('admin/orders', orders)
+            if(req.xhr){
+                res.json(orders)
+            }else{
+                return res.render('admin/orders', orders) 
+            }
+            
         })
         }
     }
