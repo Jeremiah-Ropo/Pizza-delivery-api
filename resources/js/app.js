@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { initAdmin } from './admin'
+
 let addToCart = document.querySelectorAll('.add-to-cart');
 
 function updateCart(pizza){

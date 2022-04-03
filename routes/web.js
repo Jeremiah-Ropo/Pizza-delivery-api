@@ -4,6 +4,8 @@ const homeController = require("../app/http/controllers/homeController");
 const menuController = require("../app/http/controllers/customers/menuController")
 const orderController = require("../app/http/controllers/customers/orderController")
 const adminOrderController = require('../app/http/controllers/admin/adminOrderController')
+const statusController = require('../app/http/controllers/admin/statusController')
+
 
 //Authorization
 const auth = require('../app/http/middlewares/auth');
@@ -32,6 +34,9 @@ function initRoutes(app){
     app.get('/customer/orders', auth, orderController().index)
 
     app.get('/admin/orders', admin, adminOrderController().index)
+
+    app.post('/admin/orders/status', admin, statusController().update)
+
     
 
 }
