@@ -1,45 +1,8 @@
-<section class="hero py-16">
-    <div class="container mx-auto flex items-center justify-between py-4"> 
-        <div class="w-1/2">
-            <h6 class="text-lg"><em>Are you hungry?</em></h6>
-            <h6 class="text-3xl">Order your pizza today.</h6>
-            <button class="px-6 py-2 rounded-full text-white font-bold mt-4 btn-primary">Order now</button>
-        </div>
-
-    </div>
-
-    <div class="w-1/2">
-        <img src="/img/hero-pizza.png" alt="hero-pizza">
-    </div>
-</section>
 
 <section class="menu container mx-auto py-8">
     <h1 class="text-xl font-bold mb-8">All Pizzas</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 col-gap-12 row-gap-16">
         <% if (user) { %>
-            <% if ( menuLog != '') {%>
-                <% menuLog.forEach(function(pizza, index) { %>
-                    <div>
-                        <img class="h-40 mb-4 mx-auto" src="/img/<%= pizza.image %>" alt="">
-                        <div class="w-full md:w-64">
-            
-                            <div  class="text-center">
-                                <h2 class="mb-4 text-lg "><%= pizza.name %></h2>
-                                <span class="size py-1 px-4 rounded-full uppercase text-xs"><%= pizza.size %></span>
-                            </div>
-                        
-                            <div class="py-3 flex items-center justify-around">
-                                <span class="font-bold text-lg">N <%=pizza.price %></span>
-                                <button data-pizza="<%= JSON.stringify(pizza) %> " class="add-to-cart py-1 px-6 flex items-center text-bold">
-                                    <span>+</span>
-                                    <span class="ml-4"> Add</span>
-                                </button>
-                            </div> 
-                        </div>
-                    </div>
-                <% }) %>
-            <% }%>
-        <% } else { %>
             <% if ( menuList != '') {%>
                 <% menuList.forEach(function(pizza, index) { %>
                     <div>
@@ -62,13 +25,30 @@
                     </div>
                 <% }) %>
             <% }%>
+        <% } else { %>
+            <% if ( menuGuest != '') {%>
+                <% menuGuest.forEach(function(pizza, index) { %>
+                    <div>
+                        <img class="h-40 mb-4 mx-auto" src="/img/<%= pizza.image %>" alt="">
+                        <div class="w-full md:w-64">
+            
+                            <div  class="text-center">
+                                <h2 class="mb-4 text-lg "><%= pizza.name %></h2>
+                                <span class="size py-1 px-4 rounded-full uppercase text-xs"><%= pizza.size %></span>
+                            </div>
+                        
+                            <div class="py-3 flex items-center justify-around">
+                                <span class="font-bold text-lg">N <%=pizza.price %></span>
+                                <button data-pizza="<%= JSON.stringify(pizza) %> " class="add-to-cart py-1 px-6 flex items-center text-bold">
+                                    <span>+</span>
+                                    <span class="ml-4"> Add</span>
+                                </button>
+                            </div> 
+                        </div>
+                    </div>
+                <% }) %>
+            <% }%>
         <% } %>
-
-
-        
     </div>
     
 </section>
-
-
-    

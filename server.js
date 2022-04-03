@@ -55,6 +55,7 @@ app.use(express.urlencoded({ extended: true}))
 
 //Public files setup
 app.use(express.static(__dirname + '/public'));
+
 //Flash messages setup
 app.use(flash());
 app.use(express.json())

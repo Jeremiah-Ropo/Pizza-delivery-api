@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 const orderSchema = mongoose.Schema({
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -11,16 +12,16 @@ const orderSchema = mongoose.Schema({
         required:true
     },
     phone: {
-        type:String,
+        type:Number,
         required:true
     },
     address: {
         type:String,
-        paymentType:true
+        required:true
     },
     paymentType: {
         type:String,
-        required:true
+        default:'COD'
     },
     paymentStatus: {
         type:Boolean,
@@ -28,7 +29,7 @@ const orderSchema = mongoose.Schema({
     },
     status: {
         type:String,
-        default:false
+        default:'order_placed'
     },
 
 }, {timestamps: true});
