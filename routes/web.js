@@ -32,7 +32,9 @@ function initRoutes(app){
 
     app.post('/order', auth, orderController().store);
     app.get('/customer/orders', auth, orderController().index)
+    app.get('/customer/orders/:id', auth, orderController().show)
 
+    
     app.get('/admin/orders', admin, adminOrderController().index)
 
     app.post('/admin/orders/status', admin, statusController().update)

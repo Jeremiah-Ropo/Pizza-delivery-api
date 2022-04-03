@@ -2249,10 +2249,43 @@ if (alertMsg) {
   }, 2000);
 }
 
-(0,_admin__WEBPACK_IMPORTED_MODULE_1__.initAdmin)(); // Socket
+(0,_admin__WEBPACK_IMPORTED_MODULE_1__.initAdmin)(); // Change order status
+
+var statuses = document.querySelectorAll('.status_line');
+var hiddenInput = document.querySelector('#hiddenInput');
+var order = hiddenInput ? hiddenInput.value : null;
+order = JSON.parse(order);
+var time = document.createElement('small');
+
+function updateStatus(order) {
+  statuses.forEach(function (status) {
+    status.classList.remove('step-completed');
+    status.classList.remove('current');
+  });
+  var stepCompleted = true;
+  statuses.forEach(function (status) {
+    var dataProp = status.dataset.status;
+
+    if (stepCompleted) {
+      status.classList.add('step-completed');
+    }
+
+    if (dataProp === order.status) {
+      stepCompleted = false;
+      time.innerText = moment(order.updatedAt).format('hh:mm A');
+      status.appendChild(time);
+
+      if (status.nextElementSibling) {
+        status.nextElementSibling.classList.add('current');
+      }
+    }
+  });
+}
+
+updateStatus(order); // Socket
 
 var socket = io();
-socket.emit('join');
+socket.emit('join', " order_".concat(order._id));
 
 /***/ }),
 
