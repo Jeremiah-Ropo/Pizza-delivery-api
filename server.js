@@ -11,6 +11,7 @@ const passport = require('passport')
 
 
 
+
 //App and port setup
 const app = express();
 const port = process.env.PORT || 3000;
@@ -78,6 +79,14 @@ require('./routes/web')(app);
 
 
 
-app.listen(port, () => {
-    console.log(`Listening to port ${port}`)
-});
+const server = app.listen(port, () => {
+            console.log(`Listening to port ${port}`)
+        });
+
+
+//Socket
+
+const io = require('socket.io')(server)
+io.on('connection', () => {
+    
+})

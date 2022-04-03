@@ -28,3 +28,9 @@ if(alertMsg) {
 initAdmin();
 
 
+// Socket
+
+let socket = io()
+
+socket.emit('join', )
+

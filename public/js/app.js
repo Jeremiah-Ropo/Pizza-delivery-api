@@ -2249,7 +2249,10 @@ if (alertMsg) {
   }, 2000);
 }
 
-(0,_admin__WEBPACK_IMPORTED_MODULE_1__.initAdmin)();
+(0,_admin__WEBPACK_IMPORTED_MODULE_1__.initAdmin)(); // Socket
+
+var socket = io();
+socket.emit('join');
 
 /***/ }),
 
