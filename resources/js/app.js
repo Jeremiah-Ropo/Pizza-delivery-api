@@ -3,7 +3,7 @@ import { initAdmin } from './admin'
 import moment from 'moment'
 
 let addToCart = document.querySelectorAll('.add-to-cart');
-let paymentForm = document.querySelector('#paymentForm')
+
 function updateCart(pizza){
     axios.post('/update-cart', pizza).then(res => {
         console.log(res)
@@ -11,7 +11,18 @@ function updateCart(pizza){
 }
 
 
-//
+//Paystack
+let paymentForm = document.querySelector('#paymentForm')
+paymentForm.addEventListener("submit",payWithPaystack, false);
+
+function payWithPaystack(e){
+    e.perventDefault();
+    console.log(e)
+}
+
+let handler = PaystackPop.setup({
+    key: ""
+})
 
 addToCart.forEach((btn) => {
     btn.addEventListener('click', (e) => {
