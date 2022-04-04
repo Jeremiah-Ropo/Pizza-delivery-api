@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { initAdmin } from './admin'
+import moment from 'moment'
 
 let addToCart = document.querySelectorAll('.add-to-cart');
 
@@ -25,7 +26,6 @@ if(alertMsg) {
     }, 2000)
 }
 
-initAdmin();
 
 
 
@@ -67,6 +67,20 @@ updateStatus(order);
 // Socket
 
 let socket = io()
+if(order){
+    socket.emit('join',` order_${order._id}`  )
+}
 
-socket.emit('join',` order_${order._id}`  )
+let adminAreaPath = window.location.pathname
+if(adminAreaPath.includes('admin')){
+    initAdmin(socket);
+    socket.emit('join', 'adminRoom')
+    
+}
 
+socket.on('orderUpdated', (data) => {
+    const updatedOrder = { ...order }
+    updatedOrder.updatedAt = moment().format()
+    updatedOrder.status = data.status
+    updateStatus(upadatedOrder)
+})

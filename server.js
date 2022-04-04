@@ -8,7 +8,7 @@ const MongoDbStore = require('connect-mongo')
 const path = require('path');
 const mongoose = require('mongoose')
 const passport = require('passport')
-
+const Emitter = require('events')
 
 
 
@@ -45,6 +45,10 @@ app.use(session({
     resave:true,
     cookie:{maxAge:1000 * 60 * 60 * 24 }//24hours
 }))
+
+const eventEmitter = new Emitter()
+app.set('eventEmitter', eventEmitter)
+
 
 const passportInit = require('./app/config/passport')
 passportInit(passport)
@@ -87,6 +91,19 @@ const server = app.listen(port, () => {
 //Socket
 
 const io = require('socket.io')(server)
-io.on('connection', () => {
-    
+io.on('connection', (socket) => {
+    //Join
+    socket.on('join', (orderId) => {
+        socket.join(orderId)
+    })
 })
+
+eventEmitter.on('orderUpdated', (data) => {
+    io.to(` order_${data.id}`).emit('orderUpdated', data)
+})
+
+eventEmitter.on('orderPlaced', (data)=> {
+    io.to(adminRoom).emit('orderPlaced', data)
+})
+
+
