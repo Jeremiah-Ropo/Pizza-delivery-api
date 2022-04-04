@@ -80,7 +80,9 @@ app.set('view engine', 'ejs');
 
 //Router setup
 require('./routes/web')(app);
-
+app.use((req, res)=> {
+    res.status(404).send('<h1>404, Page not found</h1>')
+})
 
 
 const server = app.listen(port, () => {
@@ -103,7 +105,7 @@ eventEmitter.on('orderUpdated', (data) => {
 })
 
 eventEmitter.on('orderPlaced', (data)=> {
-    io.to(adminRoom).emit('orderPlaced', data)
+    io.to("adminRoom").emit('orderPlaced', data)
 })
 
 
