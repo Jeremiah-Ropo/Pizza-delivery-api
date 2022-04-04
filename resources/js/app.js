@@ -3,12 +3,15 @@ import { initAdmin } from './admin'
 import moment from 'moment'
 
 let addToCart = document.querySelectorAll('.add-to-cart');
-
+let paymentForm = document.querySelector('#paymentForm')
 function updateCart(pizza){
     axios.post('/update-cart', pizza).then(res => {
         console.log(res)
     })
 }
+
+
+//
 
 addToCart.forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -62,6 +65,8 @@ function updateStatus(order) {
 }
 
 updateStatus(order);
+
+
 
 
 // Socket

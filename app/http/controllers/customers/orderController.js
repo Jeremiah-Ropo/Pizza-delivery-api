@@ -5,8 +5,8 @@ function orderController(){
     return {
         store(req, res){
 
-            const { phone, address} = req.body
-            if(!phone || !address) {
+            const { phone, address, userEmail} = req.body
+            if(!phone || !address || !userEmail) {
                 req.flash('error', 'All field are required!')
             
                 return res.redirect('/cart')
@@ -16,6 +16,7 @@ function orderController(){
                 customerId: req.user._id,
                 items: req.session.cart.items,
                 phone,
+                userEmail,
                 address
             })
             order.save().then(result => {
