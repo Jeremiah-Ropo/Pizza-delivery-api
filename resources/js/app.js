@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { initAdmin } from './admin'
 import moment from 'moment'
+import paystack from './paystack';
 
 let addToCart = document.querySelectorAll('.add-to-cart');
 
@@ -11,18 +12,7 @@ function updateCart(pizza){
 }
 
 
-//Paystack
-let paymentForm = document.querySelector('#paymentForm')
-paymentForm.addEventListener("submit",payWithPaystack, false);
-
-function payWithPaystack(e){
-    e.perventDefault();
-    console.log(e)
-}
-
-let handler = PaystackPop.setup({
-    key: ""
-})
+paystack
 
 addToCart.forEach((btn) => {
     btn.addEventListener('click', (e) => {

@@ -1,11 +1,17 @@
 const Order = require("../../../models/order")
-const moment = require('moment')
+const moment = require('moment');
+const paystack = require("../../../../resources/js/paystack");
 
 function orderController(){
     return {
         store(req, res){
 
-            const { phone, address, userEmail} = req.body
+           
+
+
+           
+
+            const { phone, address, userEmail, paymentType} = req.body
             if(!phone || !address || !userEmail) {
                 req.flash('error', 'All field are required!')
             
@@ -22,6 +28,20 @@ function orderController(){
             order.save().then(result => {
                 Order.populate(result, { path: 'customerId'}, (err,placedOrder) => {
                     req.flash('success', 'Order has been placed successfully')
+
+                 //Paystack payment   
+                 if(paymentType === "COD"){
+                    const payload = {
+                        amount : amount * 100,
+                        email : req.body.userEmail,
+                        currency: 'NGN',
+                        reference: req.user._id,
+                        callback_url: '/customer/orders'
+                    };
+                    const data = paystack.initializePayment(payload)
+                    return res.send(data)
+                 }
+                    
                     delete req.session.cart 
                     //Emit
                     const eventEmitter = req.app.get('eventEmitter')
@@ -50,6 +70,23 @@ function orderController(){
                 return res.render('customers/singleOrder', { order })
             }
             return res.redirect('/')
+        },
+        async inital(req,res){
+            console.log(req.session.cart.totalPrice);
+
+            const formData = {
+                email:req.body.email,
+                amount: (req.session.cart.totalPrice) * 100
+            };
+            formData.metadata = {
+                address: req.body.address,
+                phone: req.body.phone
+            };
+            const options = {
+                url:'https://api.paystack.co/transaction/initialize',
+                form: formData,
+                headers:
+            }
         }
     }
 }

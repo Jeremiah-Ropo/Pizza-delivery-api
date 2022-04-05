@@ -25,7 +25,7 @@ class payWithPaystack {
       },
     };
     const res = await axios(options);
-    return res.data;
+    return res.data; 
   }
 }
 

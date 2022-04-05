@@ -25,12 +25,12 @@
                     </div>
                     <% if (user) {%>
                     <div>
-                        <form id="paymentForm" action="/order" method="POST" class="mt-12">
+                        <form id="paymentForm" action="/api/paystack/pay" method="POST" class="mt-12">
                             <input name="address" type="text"  class="border border-gray-400 p-2 w-1/2 mb-2" placeholder="Address">
                             <input name="userEmail" type="text"  class="border border-gray-400 p-2 w-1/2 mb-2" placeholder="Email">
                             <input name="phone" type="text"  class="border border-gray-400 p-2 w-1/2 " placeholder="Phone number">
                             <div class="mt-auto">
-                                <button onclick="payWithPayStack()" class="btn-primary px-6 py-2 rounded-full text-white font-bold mt-6" type="submit">Order now</button>
+                                <button onclick="" class="btn-primary px-6 py-2 rounded-full text-white font-bold mt-6" type="submit">Order now</button>
                             </div>
                         </form>
                     </div>
